@@ -22,7 +22,7 @@ public class Proj6_2_TicTacToe {
             int[] coord;
             coord = userAction(gameBoard);
 
-            if(isWinner(coord[0], coord[1], turn, gameBoard)) {
+            if(isWinner(turn, gameBoard)) {
                 System.out.println("Congratulation Player: ");
                 if(turn % 2 != 0) {
                     System.out.print("X");
@@ -98,11 +98,12 @@ public class Proj6_2_TicTacToe {
         return spaceNumb == 0;
     }
 
-    public static boolean isWinner(int row, int col,int turn, String[][] board) {
+    public static boolean isWinner(int turn, String[][] board) {
         int rowWin = 0;
         int colWin = 0;
-        int colStat = 0;
+        int diagWin = 0;
 
+        //Row check,
         for(int i = 0; i < board.length; i++) {
             for(int j = 0; j < board[i].length; j++) {
                 if(turn % 2 != 0) {
@@ -111,8 +112,8 @@ public class Proj6_2_TicTacToe {
                     } else {
                         break;
                     }
-                } else if (turn % 2 == 0)) {
-                    if(board[i][j].equals("X")) {
+                } else {
+                    if(board[i][j].equals("O")) {
                         rowWin++;
                     } else {
                         break;
@@ -126,6 +127,7 @@ public class Proj6_2_TicTacToe {
             }
         }
 
+        //Colum check,
         for(int i = 0; i < board[0].length; i++) {
             for(int j = 0; j < board.length; j++) {
                 if(turn % 2 != 0) {
@@ -134,8 +136,8 @@ public class Proj6_2_TicTacToe {
                     } else {
                         break;
                     }
-                } else if (turn % 2 == 0)) {
-                    if(board[i][j].equals("X")) {
+                } else {
+                    if(board[i][j].equals("O")) {
                         colWin++;
                     } else {
                         break;
@@ -149,6 +151,49 @@ public class Proj6_2_TicTacToe {
             }
         }
 
+        //Diagonal check, 1
+        for(int i = 0; i < board.length; i++){
+            if(turn % 2 != 0) {
+                if(board[i][i].equals("X")) {
+                    diagWin++;
+                } else {
+                    break;
+                }
+            } else {
+                if(board[i][i].equals("O")) {
+                    diagWin++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        if(diagWin == 3) {
+            return true;
+        } else {
+            diagWin = 0;
+        }
+
+        //Diagonal check, 2
+        for(int i = board.length - 1; i >= 0; i--){
+            if(turn % 2 != 0) {
+                if(board[i][i].equals("X")) {
+                    diagWin++;
+                } else {
+                    break;
+                }
+            } else {
+                if(board[i][i].equals("O")) {
+                    diagWin++;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        if(diagWin == 3) {
+            return true;
+        }
 
         return false;
     }
