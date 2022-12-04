@@ -22,15 +22,17 @@ public class Proj6_2_TicTacToe {
             int[] coord;
             coord = userAction(gameBoard);
 
-            if(isWinner(coord[0], coord[1])) {
+            if(isWinner(coord[0], coord[1], turn, gameBoard)) {
                 System.out.println("Congratulation Player: ");
                 if(turn % 2 != 0) {
                     System.out.print("X");
                 } else {
                     System.out.print("O");
                 }
+
                 System.out.print(" won the game!");
                 System.out.println("After: " + turn + "turns");
+
             } else if(turn % 2 != 0){
                 gameBoard[coord[0]][coord[1]] = "X";
                 turn++;
@@ -38,11 +40,10 @@ public class Proj6_2_TicTacToe {
                 gameBoard[coord[0]][coord[1]] = "O";
                 turn++;
             }
-
             printBoard(gameBoard);
-            System.out.println("Do you want to start game again?");
-        }
 
+        }
+        System.out.println("Do you want to start game again?");
     }
 
     public static void initializeGame(String[][] emptyBoard) {
@@ -64,6 +65,7 @@ public class Proj6_2_TicTacToe {
                 System.out.println("-----------");
             }
         }
+        System.out.println();
     }
 
     public static int[] userAction(String[][] board) {
@@ -96,42 +98,58 @@ public class Proj6_2_TicTacToe {
         return spaceNumb == 0;
     }
 
-    public boolean isWinner(int row, int col){
-        String Player = gameBoard[row][col];
+    public static boolean isWinner(int row, int col,int turn, String[][] board) {
+        int rowWin = 0;
+        int colWin = 0;
+        int colStat = 0;
 
-        int r = row;
-        int c = col;
-
-        boolean onDiagonal = (row == col) || (col == -1 * row + (board.length-1));
-        boolean HorizontalWin = true, VerticalWin = true;
-        boolean DiagonalWinOne = true, DiagonalWinTwo = true;
-
-        // Check the rows and columns
-        for(int n = 0; n < board.length; n++){
-            if(!board[r][n].equals(Player))
-                HorizontalWin = false;
-            if(!board[n][c].equals(Player))
-                VerticalWin = false;
-        }
-
-        // Only check diagonals if the move is on a diagonal
-        if(onDiagonal){
-            // Check the diagonals
-            for(int n = 0; n < board.length; n++){
-                if(!board[n][n].equals(Player))
-                    DiagonalWinOne = false;
-                if(!board[n][-1*n+(board.length-1)].equals(Player))
-                    DiagonalWinTwo = false;
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[i].length; j++) {
+                if(turn % 2 != 0) {
+                    if(board[i][j].equals("X")) {
+                        rowWin++;
+                    } else {
+                        break;
+                    }
+                } else if (turn % 2 == 0)) {
+                    if(board[i][j].equals("X")) {
+                        rowWin++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            if(rowWin == 3) {
+                return true;
+            } else {
+                rowWin = 0;
             }
         }
-        else{
-            DiagonalWinOne = false;
-            DiagonalWinTwo = false;
+
+        for(int i = 0; i < board[0].length; i++) {
+            for(int j = 0; j < board.length; j++) {
+                if(turn % 2 != 0) {
+                    if(board[i][j].equals("X")) {
+                        colWin++;
+                    } else {
+                        break;
+                    }
+                } else if (turn % 2 == 0)) {
+                    if(board[i][j].equals("X")) {
+                        colWin++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+            if(colWin == 3) {
+                return true;
+            } else {
+                colWin = 0;
+            }
         }
 
-        boolean hasWon = (HorizontalWin || VerticalWin || DiagonalWinOne || DiagonalWinTwo);
 
-        return hasWon;
-
+        return false;
     }
 }
