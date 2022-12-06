@@ -18,30 +18,30 @@ public class Proj6_2_TicTacToe {
         System.out.println();
         System.out.println("The X player starts, provide a numbers separated by \n space for [Column] and [Row] respectively: ");
 
-        while(!isFull(gameBoard)) {
+        while(!isFull(gameBoard) && !isWinner(turn, gameBoard)) {
             int[] coord;
             coord = userAction(gameBoard);
 
-            if(isWinner(turn, gameBoard)) {
-                System.out.println("Congratulation Player: ");
-                if(turn % 2 != 0) {
-                    System.out.print("X");
-                } else { System.out.print("O"); }
-
-                System.out.print(" won the game!");
-                System.out.println("After: " + turn + "turns");
-
-            } else if(turn % 2 != 0){
+             if(turn % 2 != 0){
                 gameBoard[coord[0]][coord[1]] = "X";
-                turn++;
-            } else {
+             } else {
                 gameBoard[coord[0]][coord[1]] = "O";
-                turn++;
-            }
-            printBoard(gameBoard);
+             }
 
+             turn++;
+             printBoard(gameBoard);
         }
+
+        System.out.println("Congratulation Player: ");
+        if(turn % 2 == 0) {
+            System.out.print("X");
+        } else { System.out.print("O"); }
+
+        System.out.print(" won the game!");
+        System.out.println();
+        System.out.println("After: " + turn + "turns");
         System.out.println("Do you want to start game again?");
+        startGame();
     }
 
     public static void initializeGame(String[][] emptyBoard) {
@@ -71,7 +71,7 @@ public class Proj6_2_TicTacToe {
         String input = keyboard.nextLine();
         int[] temp = new int[2];
         temp[0] = Integer.parseInt(input.substring(0,1)) - 1;
-        temp[1] = Integer.parseInt(input.substring(2,3)) - 1;
+        temp[1] = Integer.parseInt(input.substring(1,2)) - 1;
 
         if(isOccupied(temp, board)) {
             System.out.print("Sorry this cell is already occupied, try different one: ");
@@ -103,28 +103,29 @@ public class Proj6_2_TicTacToe {
 
         //Row check,
         for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board[i].length; j++) {
-                if(turn % 2 != 0) {
+            for(int j = 0; j < board[0].length; j++) {
+                if(turn % 2 == 0) {
                     if(board[i][j].equals("X")) { rowWin++; }
                 } else {
                     if(board[i][j].equals("O")) { rowWin++; }
                 }
             }
-
+            System.out.println("row" + rowWin);
             if(rowWin == 3) {
                 return true;
             } else { rowWin = 0; }
         }
 
-        //Colum check,
-        for(int i = 0; i < board[0].length; i++) {
-            for(int j = 0; j < board.length; j++) {
-                if(turn % 2 != 0) {
-                    if(board[i][j].equals("X")) { colWin++; }
+        //Col check,
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[0].length; j++) {
+                if(turn % 2 == 0) {
+                    if(board[j][i].equals("X")) { colWin++; }
                 } else {
-                    if(board[i][j].equals("O")) { colWin++; }
+                    if(board[j][i].equals("O")) { colWin++; }
                 }
             }
+            System.out.println("col" + colWin);
             if(colWin == 3) {
                 return true;
             } else { colWin = 0; }
