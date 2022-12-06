@@ -32,15 +32,21 @@ public class Proj6_2_TicTacToe {
              printBoard(gameBoard);
         }
 
-        System.out.println("Congratulation Player: ");
-        if(turn % 2 == 0) {
-            System.out.print("X");
-        } else { System.out.print("O"); }
+        if (isFull(gameBoard)) {
+            System.out.println("It is a Tie");
+        } else {
+            System.out.println("Congratulation Player: ");
+            if(turn % 2 == 0) {
+                System.out.print("X");
+            } else { System.out.print("O"); }
 
-        System.out.print(" won the game!");
-        System.out.println();
-        System.out.println("After: " + turn + "turns");
+            System.out.print(" won the game!");
+            System.out.println();
+            System.out.println("After: " + turn + "turns");
+        }
+
         System.out.println("Do you want to start game again?");
+        //No time for implementing code for new game question
         startGame();
     }
 
@@ -110,7 +116,6 @@ public class Proj6_2_TicTacToe {
                     if(board[i][j].equals("O")) { rowWin++; }
                 }
             }
-            System.out.println("row" + rowWin);
             if(rowWin == 3) {
                 return true;
             } else { rowWin = 0; }
@@ -125,7 +130,6 @@ public class Proj6_2_TicTacToe {
                     if(board[j][i].equals("O")) { colWin++; }
                 }
             }
-            System.out.println("col" + colWin);
             if(colWin == 3) {
                 return true;
             } else { colWin = 0; }
@@ -133,26 +137,24 @@ public class Proj6_2_TicTacToe {
 
         //Diagonal check, 1
         for(int i = 0; i < board.length; i++){
-            if(turn % 2 != 0) {
+            if(turn % 2 == 0) {
                 if(board[i][i].equals("X")) { diagWin++; }
             } else {
                 if(board[i][i].equals("O")) { diagWin++; }
             }
         }
-
         if(diagWin == 3) {
             return true;
         } else {diagWin = 0;}
 
         //Diagonal check, 2
-        for(int i = board.length - 1; i >= 0; i--){
-            if(turn % 2 != 0) {
-                if(board[i][i].equals("X")) { diagWin++; }
+        for(int i = 0; i < board.length; i++){
+            if(turn % 2 == 0) {
+                if(board[i][2 - i].equals("X")) { diagWin++; }
             } else {
-                if(board[i][i].equals("O")) { diagWin++; }
+                if(board[i][2 - i].equals("O")) { diagWin++; }
             }
         }
-
         if(diagWin == 3) { return true; }
 
         return false;
