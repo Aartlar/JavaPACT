@@ -3,6 +3,21 @@ public class House {
     private int numWindows;
     private String color;
 
+    //no-arg constructor
+    public House() {
+        numStories = 1;
+        numWindows = 4;
+        color = "gray";
+    }//end constructor
+
+    //parameterized constructor
+
+    public House(int numStories, int numWindows, String color) {
+        this.numStories = numStories;
+        this.numWindows = numWindows;
+        this.color = color;
+    }
+
     public int getNumStories() {
         return numStories;
     }
