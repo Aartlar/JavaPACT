@@ -38,6 +38,8 @@ public class Rectangle {
         return numRectangles;
     }
 
-    public
+    public double perimeter() {
+        return 2 * length + 2 * width;
+    }
 
 }
